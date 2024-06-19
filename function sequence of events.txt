@@ -1,0 +1,13 @@
+The sequence
+
+UpdateBattleState_ReadyExecuteCommand
+executing command takes place here:
+UpdateBattleState_ExecuteBattleCommand
+then it may go to:
+UpdateBattleState_SetCommandEffect (others possibilities are the retreat functions)
+UpdateBattleState_DisplayCommandEffect
+UpdateBattleState_DisplayDamageText (branches to ready and execute)
+UpdateBattleState_SetConditionMessageText
+
+DisplayCommandRecoveryStatus
+
