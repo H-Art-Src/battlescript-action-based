@@ -4335,6 +4335,11 @@ namespace Yukar.Battle
                     .OrderByDescending(x => x.turn)
                     .FirstOrDefault(x => x.turn >= 1)?.data;
 
+            //TODO Remove the first conditional as soon as all enemies require mp for attacks.
+            //TODO Have a limit on non-mp using actions such as guard or escape.
+            if(!(activeCharacter is ExBattleEnemyData) && activeCharacter != null && activeCharacter.MagicPoint > 0)
+                limited = activeCharacter;
+
             if (limited is ExBattlePlayerData)
             {
                 activeCharacter = limited;
@@ -4945,6 +4950,7 @@ namespace Yukar.Battle
         }
 
         private void UpdateBattleState_ExecuteBattleCommand()
+        private void UpdateBattleState_ExecuteBattleCommand() //Is this it? -51
         {
             var gs = catalog.getGameSettings();
             var damageTextList = new List<BattleDamageTextInfo>();
@@ -5235,6 +5241,7 @@ namespace Yukar.Battle
                 }
             }
 
+            //after execute command, this happens -51
             switch (activeCharacter.selectedBattleCommandType)
             {
                 case BattleCommandType.PlayerEscape:
@@ -5383,6 +5390,7 @@ namespace Yukar.Battle
             {
                 // コマンドに応じたアクションをアクターにとらせる
                 // Make actors take actions according to commands
+                //51 what?
                 activeCharacter.ExecuteCommandStart();
 
                 if (isActionDisabled)
@@ -5818,7 +5826,7 @@ namespace Yukar.Battle
                     }
                 }
 
-                if (complete)
+                if (complete)//okay were nearly there -51
                 {
                     var continuous = CheckAttackContinue();
 
@@ -5829,7 +5837,7 @@ namespace Yukar.Battle
                     if (continuous == ContinuousType.NONE)
                     {
                         battleEvents.start(Rom.Script.Trigger.BATTLE_AFTER_ACTION);
-                        activeCharacter.ExecuteCommandEnd();
+                        activeCharacter.ExecuteCommandEnd(); // no definitions in the script must be non-extension thing -51
                         activeCharacter.selectedBattleCommandType = BattleCommandType.Nothing;
                     }
                     else if (continuous == ContinuousType.CONTINUOUS_ACTION)
@@ -7306,7 +7314,7 @@ namespace Yukar.Battle
             }
         }
 
-        private void ChangeBattleState(BattleState nextBattleState)
+        private void ChangeBattleState(BattleState nextBattleState)//we have to make it so it doesn't move onto the next character.
         {
             //GameMain.PushLog(DebugDialog.LogEntry.LogType.BATTLE, "System", "Set State to : " + nextBattleState.ToString());
             battleStateFrameCount = 0;
