@@ -3373,7 +3373,7 @@ namespace Yukar.Battle
             }
         }
 
-        private void UpdateBattleState()
+        private void UpdateBattleState()// battle events happen here 1 after the other -51
         {
             switch (battleState)
             {
@@ -4294,7 +4294,7 @@ namespace Yukar.Battle
             SharpKmyBase.Job.addJob(job);
         }
 
-        private void UpdateBattleState_SortBattleActions()
+        private void UpdateBattleState_SortBattleActions() //-51 he sorts priorities here.
         {
             if (battleEvents.isBusy())
                 return;
@@ -4328,7 +4328,7 @@ namespace Yukar.Battle
         /// 行動ゲージが貯まるのを待つ
         /// Wait for the action gauge to accumulate
         /// </summary>
-        private void UpdateBattleState_WaitCtbGauge()
+        private void UpdateBattleState_WaitCtbGauge() // this is the only function that changes active character
         {
             var limited = playerData.Select(x => { return new { data = (BattleCharacterBase)x, turn = ((ExBattlePlayerData)x).turnGauge }; })
                     .Concat(enemyData.Select(x => { return new { data = (BattleCharacterBase)x, turn = ((ExBattleEnemyData)x).turnGauge }; }))
@@ -4949,7 +4949,6 @@ namespace Yukar.Battle
             }
         }
 
-        private void UpdateBattleState_ExecuteBattleCommand()
         private void UpdateBattleState_ExecuteBattleCommand() //Is this it? -51
         {
             var gs = catalog.getGameSettings();
