@@ -4335,9 +4335,11 @@ namespace Yukar.Battle
                     .OrderByDescending(x => x.turn)
                     .FirstOrDefault(x => x.turn >= 1)?.data;
 
-            //TODO Remove the first conditional as soon as all enemies require mp for attacks.
-            //TODO Have a limit on non-mp using actions such as guard or escape.
-            if(!(activeCharacter is ExBattleEnemyData) && activeCharacter != null && activeCharacter.MagicPoint > 0)
+            //DONE Remove the first conditional as soon as all enemies require mp for attacks.
+            //DONE (Base game script has every action consume MP) Have a limit on non-mp using actions such as guard or escape.
+            //Use the below instead if an enemy is stuck restarting his turn because he is using a non-mp consuming action.
+            //if(!(activeCharacter is ExBattleEnemyData) && activeCharacter != null && activeCharacter.MagicPoint > 0)
+            if(activeCharacter != null && activeCharacter.MagicPoint > 0)
                 limited = activeCharacter;
 
             if (limited is ExBattlePlayerData)
